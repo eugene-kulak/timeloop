@@ -20,9 +20,9 @@ from timeloop import Timeloop
 from datetime import timedelta
 
 import logging
+logging.basicConfig(level = logging.INFO)
 
 logger = logging.getLogger('main')
-logger.setLevel(logging.INFO)
 
 tl = Timeloop()
 
