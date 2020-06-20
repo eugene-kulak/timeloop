@@ -1,5 +1,4 @@
 import logging
-import sys
 import signal
 import time
 
@@ -8,11 +7,10 @@ from timeloop.job import Job
 from timeloop.helpers import service_shutdown
 
 
-class Timeloop():
+class Timeloop:
     def __init__(self):
         self.jobs = []
         logger = logging.getLogger('timeloop')
-        logger.setLevel(logging.INFO)
         self.logger = logger
 
     def _add_job(self, func, interval, *args, **kwargs):

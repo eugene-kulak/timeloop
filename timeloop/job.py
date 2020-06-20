@@ -1,5 +1,6 @@
 from threading import Thread, Event
-from datetime import timedelta
+from datetime import datetime
+
 
 class Job(Thread):
     def __init__(self, interval, execute, *args, **kwargs):
@@ -18,7 +19,10 @@ class Job(Thread):
         stopped = self.stopped
         timeout = self.interval.total_seconds()
         task = self.execute
-        
+
         while not stopped.is_set():
+            next_run = datetime.now() + timeout
             task(*self.args, **self.kwargs)
-            stopped.wait(timeout)
+            timeout_left = (datetime.now() - next_run).total_seconds()
+            if timeout_left > 0:
+                stopped.wait(timeout_left)
