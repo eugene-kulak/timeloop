@@ -17,11 +17,10 @@ class Job(Thread):
 
     def run(self):
         stopped = self.stopped
-        timeout = self.interval.total_seconds()
         task = self.execute
 
         while not stopped.is_set():
-            next_run = datetime.now() + timeout
+            next_run = datetime.now() + self.interval
             task(*self.args, **self.kwargs)
             timeout_left = (datetime.now() - next_run).total_seconds()
             if timeout_left > 0:
