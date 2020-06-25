@@ -22,6 +22,6 @@ class Job(Thread):
         while not stopped.is_set():
             next_run = datetime.now() + self.interval
             task(*self.args, **self.kwargs)
-            timeout_left = (datetime.now() - next_run).total_seconds()
+            timeout_left = (next_run - datetime.now()).total_seconds()
             if timeout_left > 0:
                 stopped.wait(timeout_left)
